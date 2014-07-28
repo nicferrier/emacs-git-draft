@@ -62,7 +62,9 @@ indicator of defn-ness."
                       font-lock-function-name-face)))
     (goto-char
      (next-single-property-change
-      (point) 'face nil (line-end-position))))
+      (point) 'face nil (line-end-position)))
+    (when (= (point) (line-end-position))
+      (error "no defun found")))
   (buffer-substring-no-properties
    (point)
    (next-single-property-change
@@ -82,7 +84,10 @@ indicator of defn-ness."
                    (goto-line 
                     (+ (plist-get (cdr e) :from-start)
                        (or (plist-get (cdr e) :from-count) 0)))
-                   (push (git-draft/current-defun) result)))))
+                   (condition-case err
+                       (push (git-draft/current-defun) result)
+                     (error ; just ignore errors and move on
+                      ))))))
       (set-buffer buf))
     (reverse result)))
 
