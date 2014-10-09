@@ -1,0 +1,84 @@
+= Draft your git commit messages =
+
+Are you tired of endlessly typing commit messages?
+
+Do you want a fully automatic solution?
+
+Are you happy with a robot doing your work for you?
+
+If the answer to all these is //yes!// then I have got a deal for you!
+
+For just the price of agreeing to the terms and conditions of the GNU
+GPL you too can have //git-draft.el// especially included in //your//
+Emacs.
+
+//git-draft.el// is hand crafted for your needs and will automatically
+draft a commit message for you whenever you make a change to source
+files.
+
+
+== Just how does it work? ==
+
+You might have a file like this:
+
+{{{
+(ert-deftest diary-server/date-list ()
+  "Test the date listing works on the test file."
+  (diary-server/fake
+   (should
+    (equal
+     '("2014-10-2" "test one")
+     (match
+      (elt (diary-server/date-list :daystart :today) 0)
+      ((alist "date" date "head" head) (list date head)))))
+   (should 
+    (equal
+     '("2014-11-15" "test two")
+     (match 
+      (elt (diary-server/date-list :daystart "2014-11-06") 0)
+      ((alist "date" date "head" head) (list date head)))))))
+}}}
+
+and you change it, resulting ina diff like this:
+
+{{{
+diff --git a/tests.el b/tests.el
+index e1291b0..c80513a 100644
+--- a/tests.el
++++ b/tests.el
+@@ -22,12 +22,13 @@
+       ((alist "date" date "head" head) (list date head)))))
+    (should 
+     (equal
+-     '("2014-11-15" "test two")
++     '("2014-11-15" "test three")
+      (match 
+       (elt (diary-server/date-list :daystart "2014-11-06") 0)
+       ((alist "date" date "head" head) (list date head)))))))
+}}}
+
+And now you want to commit that, so you press the magic buttons and
+Emacs gives you a commit buffer. A totally empty page full of the
+leaden doom of the void. You know you *must* fill it in but what to
+write? The *pressure* is //intense//.
+
+But if you have //git-draft.el// you just hit:
+
+{{{
+M-x git-draft
+}}}
+
+and you will get:
+
+{{{
+diary-server/date-list: 
+}}}
+
+in your commit buffer. Now completing your message is a breeze! you
+just say what happened in that function!
+
+
+== Wow! this will change your life! ==
+
+Alright. Kind of bored of writing like this now. It totally won't but
+it's at least semi-useful. It could probably be made better.
