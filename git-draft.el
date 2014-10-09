@@ -6,6 +6,7 @@
 ;; Keywords: processes
 ;; Version: 0.0.1
 ;; Package-requires: ((dash "2.9.0"))
+;; Url: http://github.com/nicferrier/emacs-git-draft
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
