@@ -80,5 +80,18 @@ just say what happened in that function!
 
 == Wow! this will change your life! ==
 
-Alright. Kind of bored of writing like this now. It totally won't but
-it's at least semi-useful. It could probably be made better.
+You betcha!
+
+And you can install this //TODAY// if you just type:
+
+{{{
+M-x package-install [RET] git-draft
+}}}
+
+into your Emacs.
+
+That's right!
+
+== And this week with purchases! ==
+
+We're also //not// giving away a holiday to the Seychelles.
