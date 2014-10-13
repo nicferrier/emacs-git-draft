@@ -1,10 +1,10 @@
-;;; git-draft.el  -- draft git commit messages -*- lexical-binding: t -*-
+;;; git-draft.el --- draft git commit messages -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2014  Nic Ferrier
 
 ;; Author: Nic Ferrier <nferrier@ferrier.me.uk>
 ;; Keywords: processes
-;; Version: 0.0.1
+;; Version: 0.0.2
 ;; Package-requires: ((dash "2.9.0"))
 ;; Url: http://github.com/nicferrier/emacs-git-draft
 
@@ -135,6 +135,7 @@ indicator of defn-ness."
       (set-buffer buf))
     (reverse result)))
 
+;;;###autoload
 (defun git-draft ()
   "Insert a draft commit message into the current-buffer.
 
@@ -143,4 +144,4 @@ Presumably the current buffer is a commit buffer."
   (insert
    (s-join "\n" (--map (concat it ": ") (git-draft/make-draft)))))
 
-;; git-draft.el ends here
+;;; git-draft.el ends here
