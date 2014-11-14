@@ -65,13 +65,13 @@ elements which are p-lists beginning with either `:file' or
        (let ((pager (getenv "GIT_PAGER")))
          (setenv "GIT_PAGER" "")
          (unwind-protect
-              (shell-command "git diff -U --cached ." (current-buffer))
-           (when pager 
+             (shell-command "git diff -U --cached ." (current-buffer))
+           (when pager
              (setenv "GIT_PAGER" pager))))
        (goto-char (point-min))
-       (while (re-search-forward 
+       (while (re-search-forward
                (rx (or (and line-start ; diff start
-                            (group-n 1 "diff --git ") 
+                            (group-n 1 "diff --git ")
                             "a/" (group-n 2 (1+ (any "a-zA-Z0-9._-"))) " "
                             "b/" (group-n 3 (1+ (any "a-zA-Z0-9._-")))
                             line-end)
@@ -89,10 +89,10 @@ elements which are p-lists beginning with either `:file' or
                          :from-count (string-to-int (match-string 3))
                          :to-start (string-to-int (match-string 4))
                          :to-count (string-to-int (match-string 5)))  result)
-             ;; Else it's a diff start
-             (push (list :file
-                         :from (match-string 2)
-                         :to (match-string 3)) result)))
+           ;; Else it's a diff start
+           (push (list :file
+                       :from (match-string 2)
+                       :to (match-string 3)) result)))
        result))))
 
 (defun git-draft/current-defun ()
@@ -119,19 +119,19 @@ indicator of defn-ness."
   (let ((buf (current-buffer))
         result)
     (unwind-protect
-         (let ((lst (git-draft/diff)))
-           (dolist (e lst)
-             (if (equal (car e) :file)
-                 (set-buffer (find-file-noselect (plist-get (cdr e) :from)))
-                 ;; Else it's a hunk
-                 (save-excursion
-                   (goto-line 
-                    (+ (plist-get (cdr e) :from-start)
-                       (or (plist-get (cdr e) :from-count) 0)))
-                   (condition-case err
-                       (push (git-draft/current-defun) result)
-                     (error ; just ignore errors and move on
-                      ))))))
+        (let ((lst (git-draft/diff)))
+          (dolist (e lst)
+            (if (equal (car e) :file)
+                (set-buffer (find-file-noselect (plist-get (cdr e) :from)))
+              ;; Else it's a hunk
+              (save-excursion
+                (goto-line
+                 (+ (plist-get (cdr e) :from-start)
+                    (or (plist-get (cdr e) :from-count) 0)))
+                (condition-case err
+                    (push (git-draft/current-defun) result)
+                  (error ; just ignore errors and move on
+                   ))))))
       (set-buffer buf))
     (reverse result)))
 
