@@ -144,4 +144,5 @@ Presumably the current buffer is a commit buffer."
   (insert
    (s-join "\n" (--map (concat it ": ") (git-draft/make-draft)))))
 
+(provide 'git-draft)
 ;;; git-draft.el ends here
